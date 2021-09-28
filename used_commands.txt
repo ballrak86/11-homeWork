@@ -1,0 +1,33 @@
+vagrant ssh
+vagrant ssh-config
+nano inventory.yml
+mkdir staging
+cd staging
+taging# cd ..
+mv inventory.yml  staging/
+mv staging/inventory.yml  staging/hosts
+ansible nginx -i staging/hosts -m ping
+nano ansible.cfg
+nano staging/hosts
+ansible nginx -m ping
+ansible nginx -m command -a "uname -r"
+ansible nginx -m systemd -a name=firewalld
+ansible nginx -m yum -a "name=epel-release state=present" -b
+nano epel.yml
+ansible-playbook epel.yml
+ansible nginx -m yum -a "name=epel-release
+ansible-playbook epel.yml
+nano epel.yml
+mv epel.yml nginx.yml
+ansible-playbook nginx.yml --list-tags
+ansible-playbook nginx.yml -t nginx-package
+nano nginx.yml
+mkdir templates
+nano templates/nginx.conf.j2
+mkdir playbooks
+mv nginx.yml playbooks/
+mv templates playbooks
+mv playbooks/nginx.conf.j2 playbooks/templates/
+ll /home/lx/git/testAnsible/playbooks/templates/nginx.conf.j2
+ansible-playbook playbooks/nginx.yml
+curl http://192.168.11.150:8080

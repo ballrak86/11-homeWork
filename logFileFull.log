@@ -1,0 +1,462 @@
+root@otssTestServer:/home/lx/git/testAnsible# vagrant ssh
+[vagrant@nginx ~]$ logout
+Connection to 127.0.0.1 closed.
+root@otssTestServer:/home/lx/git/testAnsible# vagrant ssh-config
+Host nginx
+  HostName 127.0.0.1
+  User vagrant
+  Port 2200
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile /home/lx/git/testAnsible/.vagrant/machines/nginx/virtualbox/private_key
+  IdentitiesOnly yes
+  LogLevel FATAL
+
+root@otssTestServer:/home/lx/git/testAnsible# nano inventory.yml
+root@otssTestServer:/home/lx/git/testAnsible# mkdir staging
+root@otssTestServer:/home/lx/git/testAnsible# cd staging
+root@otssTestServer:/home/lx/git/testAnsible/staging# cd ..
+root@otssTestServer:/home/lx/git/testAnsible# mv inventory.yml  staging/
+root@otssTestServer:/home/lx/git/testAnsible# mv staging/inventory.yml  staging/hosts
+root@otssTestServer:/home/lx/git/testAnsible# ansible nginx -i staging/hosts -m ping
+[DEPRECATION WARNING]: Ansible will require Python 3.8 or newer on the controller starting with Ansible 2.12. Current version: 2.7.17 (default, Feb 27 2021,
+ 15:10:58) [GCC 7.5.0]. This feature will be removed from ansible-core in version 2.12. Deprecation warnings can be disabled by setting
+deprecation_warnings=False in ansible.cfg.
+nginx | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+root@otssTestServer:/home/lx/git/testAnsible# nano ansible.cfg
+root@otssTestServer:/home/lx/git/testAnsible# nano staging/hosts
+root@otssTestServer:/home/lx/git/testAnsible# ansible nginx -m ping
+nginx | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+root@otssTestServer:/home/lx/git/testAnsible# ansible nginx -m command -a "uname -r"
+nginx | CHANGED | rc=0 >>
+3.10.0-1127.el7.x86_64
+root@otssTestServer:/home/lx/git/testAnsible# ansible nginx -m systemd -a name=firewalld
+nginx | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "name": "firewalld",
+    "status": {
+        "ActiveEnterTimestampMonotonic": "0",
+        "ActiveExitTimestampMonotonic": "0",
+        "ActiveState": "inactive",
+        "After": "dbus.service polkit.service system.slice basic.target",
+        "AllowIsolate": "no",
+        "AmbientCapabilities": "0",
+        "AssertResult": "no",
+        "AssertTimestampMonotonic": "0",
+        "Before": "shutdown.target network-pre.target",
+        "BlockIOAccounting": "no",
+        "BlockIOWeight": "18446744073709551615",
+        "BusName": "org.fedoraproject.FirewallD1",
+        "CPUAccounting": "no",
+        "CPUQuotaPerSecUSec": "infinity",
+        "CPUSchedulingPolicy": "0",
+        "CPUSchedulingPriority": "0",
+        "CPUSchedulingResetOnFork": "no",
+        "CPUShares": "18446744073709551615",
+        "CanIsolate": "no",
+        "CanReload": "yes",
+        "CanStart": "yes",
+        "CanStop": "yes",
+        "CapabilityBoundingSet": "18446744073709551615",
+        "ConditionResult": "no",
+        "ConditionTimestampMonotonic": "0",
+        "Conflicts": "ebtables.service iptables.service shutdown.target ipset.service ip6tables.service",
+        "ControlPID": "0",
+        "DefaultDependencies": "yes",
+        "Delegate": "no",
+        "Description": "firewalld - dynamic firewall daemon",
+        "DevicePolicy": "auto",
+        "Documentation": "man:firewalld(1)",
+        "EnvironmentFile": "/etc/sysconfig/firewalld (ignore_errors=yes)",
+        "ExecMainCode": "0",
+        "ExecMainExitTimestampMonotonic": "0",
+        "ExecMainPID": "0",
+        "ExecMainStartTimestampMonotonic": "0",
+        "ExecMainStatus": "0",
+        "ExecReload": "{ path=/bin/kill ; argv[]=/bin/kill -HUP $MAINPID ; ignore_errors=no ; start_time=[n/a] ; stop_time=[n/a] ; pid=0 ; code=(null) ; status=0/0 }",
+        "ExecStart": "{ path=/usr/sbin/firewalld ; argv[]=/usr/sbin/firewalld --nofork --nopid $FIREWALLD_ARGS ; ignore_errors=no ; start_time=[n/a] ; stop_time=[n/a] ; pid=0 ; code=(null) ; status=0/0 }",
+        "FailureAction": "none",
+        "FileDescriptorStoreMax": "0",
+        "FragmentPath": "/usr/lib/systemd/system/firewalld.service",
+        "GuessMainPID": "yes",
+        "IOScheduling": "0",
+        "Id": "firewalld.service",
+        "IgnoreOnIsolate": "no",
+        "IgnoreOnSnapshot": "no",
+        "IgnoreSIGPIPE": "yes",
+        "InactiveEnterTimestampMonotonic": "0",
+        "InactiveExitTimestampMonotonic": "0",
+        "JobTimeoutAction": "none",
+        "JobTimeoutUSec": "0",
+        "KillMode": "mixed",
+        "KillSignal": "15",
+        "LimitAS": "18446744073709551615",
+        "LimitCORE": "18446744073709551615",
+        "LimitCPU": "18446744073709551615",
+        "LimitDATA": "18446744073709551615",
+        "LimitFSIZE": "18446744073709551615",
+        "LimitLOCKS": "18446744073709551615",
+        "LimitMEMLOCK": "65536",
+        "LimitMSGQUEUE": "819200",
+        "LimitNICE": "0",
+        "LimitNOFILE": "4096",
+        "LimitNPROC": "657",
+        "LimitRSS": "18446744073709551615",
+        "LimitRTPRIO": "0",
+        "LimitRTTIME": "18446744073709551615",
+        "LimitSIGPENDING": "657",
+        "LimitSTACK": "18446744073709551615",
+        "LoadState": "loaded",
+        "MainPID": "0",
+        "MemoryAccounting": "no",
+        "MemoryCurrent": "18446744073709551615",
+        "MemoryLimit": "18446744073709551615",
+        "MountFlags": "0",
+        "Names": "firewalld.service",
+        "NeedDaemonReload": "no",
+        "Nice": "0",
+        "NoNewPrivileges": "no",
+        "NonBlocking": "no",
+        "NotifyAccess": "none",
+        "OOMScoreAdjust": "0",
+        "OnFailureJobMode": "replace",
+        "PermissionsStartOnly": "no",
+        "PrivateDevices": "no",
+        "PrivateNetwork": "no",
+        "PrivateTmp": "no",
+        "ProtectHome": "no",
+        "ProtectSystem": "no",
+        "RefuseManualStart": "no",
+        "RefuseManualStop": "no",
+        "RemainAfterExit": "no",
+        "Requires": "system.slice basic.target",
+        "Restart": "no",
+        "RestartUSec": "100ms",
+        "Result": "success",
+        "RootDirectoryStartOnly": "no",
+        "RuntimeDirectoryMode": "0755",
+        "SameProcessGroup": "no",
+        "SecureBits": "0",
+        "SendSIGHUP": "no",
+        "SendSIGKILL": "yes",
+        "Slice": "system.slice",
+        "StandardError": "null",
+        "StandardInput": "null",
+        "StandardOutput": "null",
+        "StartLimitAction": "none",
+        "StartLimitBurst": "5",
+        "StartLimitInterval": "10000000",
+        "StartupBlockIOWeight": "18446744073709551615",
+        "StartupCPUShares": "18446744073709551615",
+        "StatusErrno": "0",
+        "StopWhenUnneeded": "no",
+        "SubState": "dead",
+        "SyslogLevelPrefix": "yes",
+        "SyslogPriority": "30",
+        "SystemCallErrorNumber": "0",
+        "TTYReset": "no",
+        "TTYVHangup": "no",
+        "TTYVTDisallocate": "no",
+        "TasksAccounting": "no",
+        "TasksCurrent": "18446744073709551615",
+        "TasksMax": "18446744073709551615",
+        "TimeoutStartUSec": "1min 30s",
+        "TimeoutStopUSec": "1min 30s",
+        "TimerSlackNSec": "50000",
+        "Transient": "no",
+        "Type": "dbus",
+        "UMask": "0022",
+        "UnitFilePreset": "enabled",
+        "UnitFileState": "disabled",
+        "Wants": "network-pre.target",
+        "WatchdogTimestampMonotonic": "0",
+        "WatchdogUSec": "0"
+    }
+}
+root@otssTestServer:/home/lx/git/testAnsible# ansible nginx -m yum -a "name=epel-release state=present" -b
+nginx | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": true,
+    "changes": {
+        "installed": [
+            "epel-release"
+        ]
+    },
+    "msg": "warning: /var/cache/yum/x86_64/7/extras/packages/epel-release-7-11.noarch.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY\nImporting GPG key 0xF4A80EB5:\n Userid     : \"CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>\"\n Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5\n Package    : centos-release-7-8.2003.0.el7.centos.x86_64 (@anaconda)\n From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7\n",
+    "rc": 0,
+    "results": [
+        "Loaded plugins: fastestmirror\nDetermining fastest mirrors\n * base: mirror.reconn.ru\n * extras: ftp.nsc.ru\n * updates: mirror.reconn.ru\nResolving Dependencies\n--> Running transaction check\n---> Package epel-release.noarch 0:7-11 will be installed\n--> Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package                Arch             Version         Repository        Size\n================================================================================\nInstalling:\n epel-release           noarch           7-11            extras            15 k\n\nTransaction Summary\n================================================================================\nInstall  1 Package\n\nTotal download size: 15 k\nInstalled size: 24 k\nDownloading packages:\nPublic key for epel-release-7-11.noarch.rpm is not installed\nRetrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Installing : epel-release-7-11.noarch                                     1/1 \n  Verifying  : epel-release-7-11.noarch                                     1/1 \n\nInstalled:\n  epel-release.noarch 0:7-11                                                    \n\nComplete!\n"
+    ]
+}
+root@otssTestServer:/home/lx/git/testAnsible# nano epel.yml
+root@otssTestServer:/home/lx/git/testAnsible# ansible-playbook epel.yml
+
+PLAY [Install EPEL Repo] ************************************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************************
+ok: [nginx]
+
+TASK [Install EPEL Repo package from standart repo] *********************************************************************************************************
+ok: [nginx]
+
+PLAY RECAP **************************************************************************************************************************************************
+nginx                      : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+root@otssTestServer:/home/lx/git/testAnsible# ansible nginx -m yum -a "name=epel-release
+> state=absent" -b
+nginx | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": true,
+    "changes": {
+        "removed": [
+            "epel-release"
+        ]
+    },
+    "msg": "",
+    "rc": 0,
+    "results": [
+        "Loaded plugins: fastestmirror\nResolving Dependencies\n--> Running transaction check\n---> Package epel-release.noarch 0:7-11 will be erased\n--> Finished Dependency Resolution\n\nDependencies Resolved\n\n================================================================================\n Package                Arch             Version        Repository         Size\n================================================================================\nRemoving:\n epel-release           noarch           7-11           @extras            24 k\n\nTransaction Summary\n================================================================================\nRemove  1 Package\n\nInstalled size: 24 k\nDownloading packages:\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  Erasing    : epel-release-7-11.noarch                                     1/1 \n  Verifying  : epel-release-7-11.noarch                                     1/1 \n\nRemoved:\n  epel-release.noarch 0:7-11                                                    \n\nComplete!\n"
+    ]
+}
+root@otssTestServer:/home/lx/git/testAnsible# ansible-playbook epel.yml
+
+PLAY [Install EPEL Repo] ************************************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************************
+ok: [nginx]
+
+TASK [Install EPEL Repo package from standart repo] *********************************************************************************************************
+changed: [nginx]
+
+PLAY RECAP **************************************************************************************************************************************************
+nginx                      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+root@otssTestServer:/home/lx/git/testAnsible# nano epel.yml
+root@otssTestServer:/home/lx/git/testAnsible# mv epel.yml nginx.yml
+root@otssTestServer:/home/lx/git/testAnsible# ansible-playbook nginx.yml --list-tags
+
+playbook: nginx.yml
+
+  play #1 (nginx): NGINX | Install and configure NGINX  TAGS: []
+      TASK TAGS: [epel-package, nginx-package, packages]
+root@otssTestServer:/home/lx/git/testAnsible# ansible-playbook nginx.yml -t nginx-package
+
+PLAY [NGINX | Install and configure NGINX] ******************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************************
+ok: [nginx]
+
+TASK [NGINX | Install NGINX package from EPEL Repo] *********************************************************************************************************
+changed: [nginx]
+
+PLAY RECAP **************************************************************************************************************************************************
+nginx                      : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+root@otssTestServer:/home/lx/git/testAnsible# nano nginx.yml
+root@otssTestServer:/home/lx/git/testAnsible# mkdir templates
+root@otssTestServer:/home/lx/git/testAnsible# nano templates/nginx.conf.j2
+root@otssTestServer:/home/lx/git/testAnsible# mkdir playbooks
+root@otssTestServer:/home/lx/git/testAnsible# mv nginx.yml playbooks/
+root@otssTestServer:/home/lx/git/testAnsible# mv templates playbooks
+root@otssTestServer:/home/lx/git/testAnsible# mv playbooks/nginx.conf.j2 playbooks/templates/
+root@otssTestServer:/home/lx/git/testAnsible# ll /home/lx/git/testAnsible/playbooks/templates/nginx.conf.j2
+-rw-r--r-- 1 root root 267 сен 28 09:39 /home/lx/git/testAnsible/playbooks/templates/nginx.conf.j2
+root@otssTestServer:/home/lx/git/testAnsible# ansible-playbook playbooks/nginx.yml
+
+PLAY [NGINX | Install and configure NGINX] ******************************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************************
+ok: [nginx]
+
+TASK [NGINX | Install EPEL Repo package from standart repo] *************************************************************************************************
+ok: [nginx]
+
+TASK [NGINX | Install NGINX package from EPEL Repo] *********************************************************************************************************
+ok: [nginx]
+
+TASK [NGINX | Create NGINX config file from template] *******************************************************************************************************
+changed: [nginx]
+
+RUNNING HANDLER [reload nginx] ******************************************************************************************************************************
+changed: [nginx]
+
+PLAY RECAP **************************************************************************************************************************************************
+nginx                      : ok=5    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+root@otssTestServer:/home/lx/git/testAnsible# curl http://192.168.11.150:8080
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Welcome to CentOS</title>
+  <style rel="stylesheet" type="text/css">
+
+        html {
+        background-image:url(img/html-background.png);
+        background-color: white;
+        font-family: "DejaVu Sans", "Liberation Sans", sans-serif;
+        font-size: 0.85em;
+        line-height: 1.25em;
+        margin: 0 4% 0 4%;
+        }
+
+        body {
+        border: 10px solid #fff;
+        margin:0;
+        padding:0;
+        background: #fff;
+        }
+
+        /* Links */
+
+        a:link { border-bottom: 1px dotted #ccc; text-decoration: none; color: #204d92; }
+        a:hover { border-bottom:1px dotted #ccc; text-decoration: underline; color: green; }
+        a:active {  border-bottom:1px dotted #ccc; text-decoration: underline; color: #204d92; }
+        a:visited { border-bottom:1px dotted #ccc; text-decoration: none; color: #204d92; }
+        a:visited:hover { border-bottom:1px dotted #ccc; text-decoration: underline; color: green; }
+
+        .logo a:link,
+        .logo a:hover,
+        .logo a:visited { border-bottom: none; }
+
+        .mainlinks a:link { border-bottom: 1px dotted #ddd; text-decoration: none; color: #eee; }
+        .mainlinks a:hover { border-bottom:1px dotted #ddd; text-decoration: underline; color: white; }
+        .mainlinks a:active { border-bottom:1px dotted #ddd; text-decoration: underline; color: white; }
+        .mainlinks a:visited { border-bottom:1px dotted #ddd; text-decoration: none; color: white; }
+        .mainlinks a:visited:hover { border-bottom:1px dotted #ddd; text-decoration: underline; color: white; }
+
+        /* User interface styles */
+
+        #header {
+        margin:0;
+        padding: 0.5em;
+        background: #204D8C url(img/header-background.png);
+        text-align: left;
+        }
+
+        .logo {
+        padding: 0;
+        /* For text only logo */
+        font-size: 1.4em;
+        line-height: 1em;
+        font-weight: bold;
+        }
+
+        .logo img {
+        vertical-align: middle;
+        padding-right: 1em;
+        }
+
+        .logo a {
+        color: #fff;
+        text-decoration: none;
+        }
+
+        p {
+        line-height:1.5em;
+        }
+
+        h1 {
+                margin-bottom: 0;
+                line-height: 1.9em; }
+        h2 {
+                margin-top: 0;
+                line-height: 1.7em; }
+
+        #content {
+        clear:both;
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 30px;
+        border-bottom: 5px solid #eee;
+        }
+
+    .mainlinks {
+        float: right;
+        margin-top: 0.5em;
+        text-align: right;
+    }
+
+    ul.mainlinks > li {
+    border-right: 1px dotted #ddd;
+    padding-right: 10px;
+    padding-left: 10px;
+    display: inline;
+    list-style: none;
+    }
+
+    ul.mainlinks > li.last,
+    ul.mainlinks > li.first {
+    border-right: none;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div id="header">
+
+    <ul class="mainlinks">
+        <li> <a href="http://www.centos.org/">Home</a> </li>
+        <li> <a href="http://wiki.centos.org/">Wiki</a> </li>
+        <li> <a href="http://wiki.centos.org/GettingHelp/ListInfo">Mailing Lists</a></li>
+        <li> <a href="http://www.centos.org/download/mirrors/">Mirror List</a></li>
+        <li> <a href="http://wiki.centos.org/irc">IRC</a></li>
+        <li> <a href="https://www.centos.org/forums/">Forums</a></li>
+        <li> <a href="http://bugs.centos.org/">Bugs</a> </li>
+        <li class="last"> <a href="http://wiki.centos.org/Donate">Donate</a></li>
+    </ul>
+
+        <div class="logo">
+                <a href="http://www.centos.org/"><img src="img/centos-logo.png" border="0"></a>
+        </div>
+
+</div>
+
+<div id="content">
+
+        <h1>Welcome to CentOS</h1>
+
+        <h2>The Community ENTerprise Operating System</h2>
+
+        <p><a href="http://www.centos.org/">CentOS</a> is an Enterprise-class Linux Distribution derived from sources freely provided
+to the public by Red Hat, Inc. for Red Hat Enterprise Linux.  CentOS conforms fully with the upstream vendors
+redistribution policy and aims to be functionally compatible. (CentOS mainly changes packages to remove upstream vendor
+branding and artwork.)</p>
+
+        <p>CentOS is developed by a small but growing team of core
+developers.&nbsp; In turn the core developers are supported by an active user community
+including system administrators, network administrators, enterprise users, managers, core Linux contributors and Linux enthusiasts from around the world.</p>
+
+        <p>CentOS has numerous advantages including: an active and growing user community, quickly rebuilt, tested, and QA'ed errata packages, an extensive <a href="http://www.centos.org/download/mirrors/">mirror network</a>, developers who are contactable and responsive, Special Interest Groups (<a href="http://wiki.centos.org/SpecialInterestGroup/">SIGs</a>) to add functionality to the core CentOS distribution, and multiple community support avenues including a <a href="http://wiki.centos.org/">wiki</a>, <a
+href="http://wiki.centos.org/irc">IRC Chat</a>, <a href="http://wiki.centos.org/GettingHelp/ListInfo">Email Lists</a>, <a href="https://www.centos.org/forums/">Forums</a>, <a href="http://bugs.centos.org/">Bugs Database</a>, and an <a
+href="http://wiki.centos.org/FAQ/">FAQ</a>.</p>
+
+        </div>
+
+</div>
+
+
+</body>
+</html>
